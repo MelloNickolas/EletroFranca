@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eletro França | Manutenção Elétrica Residencial</title>
+<meta name="description" content="Eletro França — instalações, manutenções e emergências elétricas residenciais com segurança, agilidade e garantia.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="icon" href="Imgs/Logo-Mini_NB.png" type="image/png">
+<link rel="stylesheet" href="css/style.css?v=9">
+</head>
+<body>
+
+<!-- ===== PRELOADER ===== -->
+<div class="preloader" id="preloader">
+  <div class="preloader__mark">
+    <img src="Imgs/Logo-Mini_NB.png" alt="" class="preloader__logo">
+    <div class="preloader__bolt"></div>
+  </div>
+  <div class="preloader__bar"><span id="preloaderFill"></span></div>
+</div>
+
+<!-- ===== NOISE / GRAIN OVERLAY ===== -->
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ===== CUSTOM CURSOR ===== -->
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+<!-- ===== SECTION TIMELINE (right side, tracks scroll position) ===== -->
+<nav class="section-nav" id="sectionNav" aria-label="Progresso da página">
+  <span class="section-nav__label" id="sectionNavLabel">Início</span>
+  <div class="section-nav__track" id="sectionNavTrack"></div>
+</nav>
+
+<!-- ===== NAVBAR ===== -->
+<header class="navbar" id="navbar">
+  <div class="navbar__inner">
+    <a href="#topo" class="navbar__brand" aria-label="Eletro França - início">
+      <img src="Imgs/Logo-Mini_NB.png" alt="" class="navbar__logo">
+      <span class="navbar__brand-text">Eletro França</span>
+    </a>
+
+    <nav class="navbar__nav" id="navMenu" aria-label="Navegação principal">
+      <a href="#sobre" class="navbar__link">Sobre</a>
+      <a href="#servicos" class="navbar__link">Serviços</a>
+      <a href="#processo" class="navbar__link">Processo</a>
+      <a href="#trabalhos" class="navbar__link">Trabalhos</a>
+      <a href="#contato" class="navbar__link">Contato</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20um%20or%C3%A7amento!" target="_blank" rel="noopener" class="btn btn--primary navbar__cta">
+        <span>Orçamento</span>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <button class="navbar__burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== MOBILE MENU OVERLAY ===== -->
+<div class="mobile-menu" id="mobileMenu">
+  <nav aria-label="Navegação mobile">
+    <a href="#sobre" class="mobile-menu__link">Sobre</a>
+    <a href="#servicos" class="mobile-menu__link">Serviços</a>
+    <a href="#processo" class="mobile-menu__link">Processo</a>
+    <a href="#trabalhos" class="mobile-menu__link">Trabalhos</a>
+    <a href="#contato" class="mobile-menu__link">Contato</a>
+  </nav>
+  <a href="https://www.instagram.com/eletrofranca_/" target="_blank" rel="noopener" class="mobile-menu__social">@eletrofranca_</a>
+</div>
+
+<main id="topo">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <canvas id="heroCanvas" class="hero__canvas" aria-hidden="true"></canvas>
+    <div class="hero__vignette" aria-hidden="true"></div>
+
+    <div class="hero__content container">
+      <h1 class="hero__title">
+        <span class="hero__title-line" data-speed="0.9">SEGURANÇA</span>
+        <span class="hero__title-line hero__title-line--accent" data-speed="1.05">QUE ILUMINA</span>
+        <span class="hero__title-line" data-speed="0.9">SUA CASA</span>
+      </h1>
+
+      <p class="hero__desc reveal-line">
+        A Eletro França cuida de instalações, manutenções e emergências elétricas
+        com precisão técnica e atendimento rápido, para você não pensar mais nisso.
+      </p>
+
+      <div class="hero__actions reveal-line">
+        <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20um%20or%C3%A7amento!" target="_blank" rel="noopener" class="btn btn--primary btn--lg">
+          <span>Solicitar orçamento</span>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#trabalhos" class="btn btn--ghost btn--lg">
+          <span>Ver trabalhos</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SOBRE ===== -->
+  <section class="sobre" id="sobre">
+    <div class="container sobre__grid">
+      <div class="sobre__visual">
+        <div class="sobre__frame">
+          <img src="Imgs/Logo-Normal_NB.png" alt="Eletro França" class="sobre__logo-float">
+          <div class="sobre__ring"></div>
+          <div class="sobre__spark"></div>
+        </div>
+        <div class="sobre__badge">
+          <strong id="statYears">0</strong>
+          <span>anos cuidando de instalações elétricas</span>
+        </div>
+      </div>
+
+      <div class="sobre__text">
+        <p class="section-kicker">// Sobre a Eletro França</p>
+        <h2 class="section-title">
+          Eletricidade residencial<br> feita com <span class="text-accent">precisão</span> e transparência.
+        </h2>
+        <p class="sobre__p">
+          Somos especialistas em manutenção elétrica residencial: do reparo pontual
+          à reforma completa do sistema elétrico da sua casa. Trabalhamos com
+          diagnóstico claro, orçamento transparente e execução dentro das normas
+          técnicas — sem gambiarra, sem atalhos.
+        </p>
+        <p class="sobre__p">
+          Cada serviço é tratado como se fosse na nossa própria casa: com cuidado,
+          organização e respeito pelo seu tempo.
+        </p>
+
+        <ul class="sobre__list">
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Diagnóstico técnico e orçamento sem enrolação</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Materiais de qualidade e normas de segurança (NBR 5410)</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Atendimento rápido, inclusive para emergências</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STATS ===== -->
+  <section class="stats" id="stats">
+    <div class="container stats__grid">
+      <div class="stats__item">
+        <span class="stats__number" data-count="500">0</span><span class="stats__suffix">+</span>
+        <p>serviços realizados</p>
+      </div>
+      <div class="stats__item">
+        <span class="stats__number" data-count="98">0</span><span class="stats__suffix">%</span>
+        <p>clientes satisfeitos</p>
+      </div>
+      <div class="stats__item">
+        <span class="stats__number" data-count="24">0</span><span class="stats__suffix">h</span>
+        <p>atendimento de urgência</p>
+      </div>
+      <div class="stats__item">
+        <span class="stats__number" data-count="7">0</span><span class="stats__suffix">+</span>
+        <p>anos de experiência</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVIÇOS ===== -->
+  <section class="servicos" id="servicos">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-kicker">// O que fazemos</p>
+        <h2 class="section-title">Serviços que mantêm<br>sua casa <span class="text-accent">segura e funcionando</span></h2>
+      </div>
+
+      <div class="servicos__grid">
+
+        <article class="service-card">
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H12L11 22L20 10H12L13 2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="service-card__index">01</span>
+          <h3>Instalações Elétricas</h3>
+          <p>Projetos e execução de instalações novas com segurança, capacidade e acabamento impecável.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.1-3.1a4 4 0 01-5.1 5.1L7 20l-3-3 8.7-8.7a4 4 0 015.1-5.1l-3.1 3.1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="service-card__index">02</span>
+          <h3>Manutenção Preventiva</h3>
+          <p>Inspeção completa do sistema elétrico para evitar riscos, curtos e falhas antes que aconteçam.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="service-card__index">03</span>
+          <h3>Emergências 24h</h3>
+          <p>Curto-circuito, quedas de energia ou disjuntor desarmando? Atendimento rápido quando você mais precisa.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M9 8h6M9 12h6M9 16h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <span class="service-card__index">04</span>
+          <h3>Quadros &amp; Disjuntores</h3>
+          <p>Troca, dimensionamento e organização de quadros de distribuição dentro das normas técnicas.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 17L10 11L14 15L20 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 9H20V15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="service-card__index">05</span>
+          <h3>Automação Residencial</h3>
+          <p>Iluminação inteligente, tomadas e interruptores conectados para uma casa mais prática.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 21C12 21 4 15.5 4 9.8C4 6.6 6.5 4 9.6 4C11.1 4 12.5 4.8 13 6C13.5 4.8 14.9 4 16.4 4C19.5 4 22 6.6 22 9.8C22 15.5 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="service-card__index">06</span>
+          <h3>Laudos &amp; Vistorias</h3>
+          <p>Avaliação técnica da instalação elétrica para compra, venda ou locação de imóveis.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROCESSO (horizontal pinned scroll) ===== -->
+  <section class="processo" id="processo">
+    <div class="processo__sticky">
+      <div class="section-head container">
+        <p class="section-kicker">// Como funciona</p>
+        <h2 class="section-title">Do primeiro contato<br>até a <span class="text-accent">luz acender</span></h2>
+      </div>
+
+      <div class="processo__track" id="processoTrack">
+        <div class="processo__step">
+          <span class="processo__num">01</span>
+          <h3>Contato</h3>
+          <p>Você chama no WhatsApp e conta o que está acontecendo — com foto ou vídeo, se puder.</p>
+        </div>
+        <div class="processo__step">
+          <span class="processo__num">02</span>
+          <h3>Diagnóstico</h3>
+          <p>Avaliamos o problema e explicamos exatamente o que precisa ser feito, sem termos técnicos difíceis.</p>
+        </div>
+        <div class="processo__step">
+          <span class="processo__num">03</span>
+          <h3>Orçamento</h3>
+          <p>Você recebe um valor claro e fechado, sem surpresas na hora de pagar.</p>
+        </div>
+        <div class="processo__step">
+          <span class="processo__num">04</span>
+          <h3>Execução</h3>
+          <p>Serviço realizado com segurança, materiais de qualidade e cuidado com sua casa.</p>
+        </div>
+        <div class="processo__step processo__step--final">
+          <span class="processo__num">05</span>
+          <h3>Garantia</h3>
+          <p>Todo serviço sai com garantia. Se precisar de nós de novo, estamos a um WhatsApp de distância.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TRABALHOS / FEED ===== -->
+  <section class="feed" id="trabalhos">
+    <div class="container">
+      <div class="section-head section-head--feed">
+        <div>
+          <p class="section-kicker">// Nosso trabalho</p>
+          <h2 class="section-title">Direto do <span class="text-accent">canteiro de obra</span></h2>
+        </div>
+        <a href="https://www.instagram.com/eletrofranca_/" target="_blank" rel="noopener" class="feed__ig-link">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>
+          <span>@eletrofranca_</span>
+        </a>
+      </div>
+
+      <div class="feed__grid" id="feedGrid"><!-- gerado via js/main.js a partir de trabalhos/ --></div>
+
+      <p class="feed__hint">
+        📁 Coloque as fotos dos serviços na pasta <code>/trabalhos</code> e liste os nomes dos arquivos em
+        <code>js/main.js</code> (constante <code>WORK_ITEMS</code>) — o card entra automaticamente no feed.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== DEPOIMENTOS ===== -->
+  <section class="depoimentos" id="depoimentos">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-kicker">// Quem já confiou</p>
+        <h2 class="section-title">Clientes que <span class="text-accent">recomendam</span></h2>
+      </div>
+
+      <div class="depoimentos__track">
+        <blockquote class="depoimento-card">
+          <p>“Atendimento rápido e explicou tudo antes de mexer no quadro. Resolveu um problema que já durava semanas.”</p>
+          <footer><strong>Marcos A.</strong><span>Zona Sul</span></footer>
+        </blockquote>
+        <blockquote class="depoimento-card">
+          <p>“Chamei numa emergência à noite e foram super atenciosos. Recomendo de olhos fechados.”</p>
+          <footer><strong>Juliana R.</strong><span>Zona Norte</span></footer>
+        </blockquote>
+        <blockquote class="depoimento-card">
+          <p>“Fizeram a instalação elétrica completa da reforma. Organização e limpeza impecáveis.”</p>
+          <footer><strong>Carlos E.</strong><span>Centro</span></footer>
+        </blockquote>
+        <blockquote class="depoimento-card">
+          <p>“Preço justo, serviço com garantia e ainda deram dicas de economia de energia. Show.”</p>
+          <footer><strong>Fernanda L.</strong><span>Zona Leste</span></footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA / CONTATO ===== -->
+  <section class="cta-final" id="contato">
+    <canvas id="ctaCanvas" class="cta-final__canvas" aria-hidden="true"></canvas>
+    <div class="container cta-final__inner">
+      <p class="section-kicker section-kicker--light">// Vamos resolver isso</p>
+      <h2 class="cta-final__title">Pronto para dar<br><span class="text-accent">choque</span> de energia<br>na sua casa?</h2>
+      <p class="cta-final__desc">Fale agora com a Eletro França e receba um orçamento rápido, sem compromisso.</p>
+      <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20um%20or%C3%A7amento!" target="_blank" rel="noopener" class="btn btn--primary btn--xl">
+        <span>Chamar no WhatsApp</span>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a href="#topo" class="footer__logo-lockup" aria-label="Eletro França - início">
+        <img src="Imgs/Logo-Mini_NB.png" alt="" class="footer__logo">
+        <span>Eletro França</span>
+      </a>
+      <p>Manutenções elétricas residenciais com segurança e transparência.</p>
+    </div>
+
+    <div class="footer__col">
+      <h4>Navegação</h4>
+      <a href="#sobre">Sobre</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#processo">Processo</a>
+      <a href="#trabalhos">Trabalhos</a>
+    </div>
+
+    <div class="footer__col">
+      <h4>Contato</h4>
+      <a href="https://wa.me/5500000000000" target="_blank" rel="noopener">(00) 00000-0000</a>
+      <a href="mailto:contato@eletrofranca.com.br">contato@eletrofranca.com.br</a>
+      <a href="https://www.instagram.com/eletrofranca_/" target="_blank" rel="noopener">@eletrofranca_</a>
+    </div>
+
+    <div class="footer__col">
+      <h4>Atendimento</h4>
+      <p>Seg. – Sáb.<br>08h às 19h</p>
+      <p class="footer__emergency">Emergências: 24h</p>
+    </div>
+  </div>
+  <div class="footer__bottom container">
+    <span>© <span id="year"></span> Eletro França. Todos os direitos reservados.</span>
+    <span>Feito com energia ⚡</span>
+  </div>
+</footer>
+
+<!-- ===== LIGHTBOX ===== -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox__close" id="lightboxClose" aria-label="Fechar">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <img src="" alt="" id="lightboxImg">
+  <p id="lightboxCaption"></p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/main.js?v=9"></script>
+</body>
+</html>
