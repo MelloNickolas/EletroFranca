@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <link rel="icon" href="Imgs/Logo-Mini_NB.png" type="image/png">
-<link rel="stylesheet" href="css/style.css?v=9">
+<link rel="stylesheet" href="css/style.css?v=24">
 </head>
 <body>
 
@@ -110,40 +110,43 @@
 
   <!-- ===== SOBRE ===== -->
   <section class="sobre" id="sobre">
-    <div class="container sobre__grid">
-      <div class="sobre__visual">
-        <div class="sobre__frame">
-          <img src="Imgs/Logo-Normal_NB.png" alt="Eletro França" class="sobre__logo-float">
-          <div class="sobre__ring"></div>
-          <div class="sobre__spark"></div>
+    <div class="sobre__wrap container">
+      <div class="sobre__card">
+        <div class="sobre__art" aria-hidden="true">
+          <picture>
+            <source media="(max-width: 479px)" srcset="Imgs/Sobre/Sobre-Small.png">
+            <source media="(max-width: 767px)" srcset="Imgs/Sobre/Sobre-Mobile.png">
+            <source media="(max-width: 1023px)" srcset="Imgs/Sobre/Sobre-Tablet.png">
+            <img src="Imgs/Sobre/Sobre-Desktop.png" alt="" class="sobre__art-img">
+          </picture>
         </div>
-        <div class="sobre__badge">
-          <strong id="statYears">0</strong>
-          <span>anos cuidando de instalações elétricas</span>
+
+        <div class="sobre__content">
+          <h2 class="section-title sobre__title">
+            Eletricidade residencial feita com <span class="sobre__accent">precisão</span>.
+          </h2>
+
+          <div class="sobre__cards">
+            <div class="sobre__mini-card">
+              <div class="sobre__mini-icon">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M9 14l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.8"/></svg>
+              </div>
+              <p>Orçamento sem enrolação</p>
+            </div>
+            <div class="sobre__mini-card">
+              <div class="sobre__mini-icon">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              </div>
+              <p>Materiais e normas de segurança</p>
+            </div>
+            <div class="sobre__mini-card">
+              <div class="sobre__mini-icon">
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <p>Atendimento rápido, inclusive emergências</p>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div class="sobre__text">
-        <p class="section-kicker">// Sobre a Eletro França</p>
-        <h2 class="section-title">
-          Eletricidade residencial<br> feita com <span class="text-accent">precisão</span> e transparência.
-        </h2>
-        <p class="sobre__p">
-          Somos especialistas em manutenção elétrica residencial: do reparo pontual
-          à reforma completa do sistema elétrico da sua casa. Trabalhamos com
-          diagnóstico claro, orçamento transparente e execução dentro das normas
-          técnicas — sem gambiarra, sem atalhos.
-        </p>
-        <p class="sobre__p">
-          Cada serviço é tratado como se fosse na nossa própria casa: com cuidado,
-          organização e respeito pelo seu tempo.
-        </p>
-
-        <ul class="sobre__list">
-          <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Diagnóstico técnico e orçamento sem enrolação</li>
-          <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Materiais de qualidade e normas de segurança (NBR 5410)</li>
-          <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Atendimento rápido, inclusive para emergências</li>
-        </ul>
       </div>
     </div>
   </section>
@@ -394,6 +397,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="js/main.js?v=9"></script>
+<script src="js/main.js?v=24"></script>
 </body>
 </html>

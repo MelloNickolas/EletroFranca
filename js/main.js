@@ -170,12 +170,12 @@
     };
 
     /* --- Generic reveal-on-scroll for section heads / cards ---
-       Note: .service-card is intentionally excluded here — it gets its own
-       dedicated stagger animation below. Having both fight over the same
-       y/opacity transform on the same elements was causing the visible
-       jitter/"bug" on the service cards during scroll. */
+       Note: .service-card and .sobre__cards are intentionally excluded here —
+       they get their own dedicated stagger animations below. Having both fight
+       over the same y/opacity transform on the same elements was causing the
+       visible jitter/"bug" seen on the service cards during scroll. */
     const revealTargets = gsap.utils.toArray(
-      ".section-head, .sobre__text > *, .depoimento-card, .stats__item, .footer__col, .footer__brand"
+      ".section-head, .sobre__title, .depoimento-card, .stats__item, .footer__col, .footer__brand"
     );
     revealTargets.forEach((el) => {
       gsap.from(el, {
@@ -197,15 +197,35 @@
       scrollTrigger: { trigger: ".servicos__grid", start: "top 85%", toggleActions: "play none none reverse" },
     });
 
-    /* --- Sobre visual parallax --- */
-    gsap.to(".sobre__frame", {
-      yPercent: -6,
-      ease: "none",
-      scrollTrigger: { trigger: ".sobre", start: "top bottom", end: "bottom top", scrub: 1 },
-    });
-    gsap.from(".sobre__badge", {
-      scale: 0.7, opacity: 0, duration: 0.8, ease: "back.out(1.6)",
-      scrollTrigger: { trigger: ".sobre__badge", start: "top 90%" },
+    /* --- Sobre artwork: scrubbed entrance (slide up + fade only) + parallax ---
+       Tied directly to scroll position (scrub) instead of a timed play-once
+       animation — the rays/batteries only finish sliding/fading in once the
+       user finishes scrolling through the range, not as soon as it appears.
+       Kept slightly oversized (scale 1.08, fixed — not animated) at rest so
+       the parallax drift never exposes an edge, since the image covers the
+       card at 100% height/width. */
+    const sobreArt = document.querySelector(".sobre__art-img");
+    if (sobreArt) {
+      gsap.set(sobreArt, { scale: 1.08 });
+      gsap.fromTo(sobreArt,
+        { y: 120, opacity: 0 },
+        { y: 0, opacity: 1, ease: "none",
+          scrollTrigger: {
+            trigger: sobreArt,
+            start: "top 100%",
+            end: "top 35%",
+            scrub: 1,
+          } }
+      );
+      gsap.to(sobreArt, {
+        yPercent: -4, ease: "none",
+        scrollTrigger: { trigger: ".sobre__card", start: "top bottom", end: "bottom top", scrub: 1 },
+      });
+    }
+
+    gsap.from(".sobre__mini-card", {
+      y: 24, opacity: 0, duration: 0.7, stagger: 0.1,
+      scrollTrigger: { trigger: ".sobre__cards", start: "top 88%", toggleActions: "play none none reverse" },
     });
 
     /* --- Stats count-up --- */
@@ -226,18 +246,6 @@
         },
       });
     });
-
-    // Years badge counter
-    const statYears = document.getElementById("statYears");
-    if (statYears) {
-      const counter = { val: 0 };
-      ScrollTrigger.create({
-        trigger: statYears,
-        start: "top 90%",
-        once: true,
-        onEnter: () => gsap.to(counter, { val: 7, duration: 1.4, onUpdate: () => statYears.textContent = Math.round(counter.val) }),
-      });
-    }
 
     /* --- PROCESSO: horizontal pinned scroll (scroll travado) --- */
     const processoTrack = document.getElementById("processoTrack");
