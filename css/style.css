@@ -363,6 +363,7 @@ section{
 
 .section-head{ max-width: 760px; margin: 0 0 40px; }
 .section-head--feed{ display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; max-width:none; }
+.section-head--center{ text-align:center; margin-left:auto; margin-right:auto; }
 
 /* =========================================================
    SOBRE — gradient card with the battery/spark artwork
@@ -460,36 +461,71 @@ section{
 .stats__item p{ margin: 10px 0 0; color: var(--ink-muted); font-size:14px; text-transform:uppercase; letter-spacing:.05em; }
 
 /* =========================================================
-   SERVIÇOS
+   SERVIÇOS — carrossel autoplay com efeito de lente
+   (centro maior, laterais menores; loop vai-e-volta via JS)
 ========================================================= */
-.servicos{ background: var(--bg); }
-.servicos__grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border:1px solid var(--border); border-radius: 20px; overflow:hidden; }
-@media (max-width: 900px){ .servicos__grid{ grid-template-columns: repeat(2,1fr); } }
-@media (max-width: 600px){ .servicos__grid{ grid-template-columns: 1fr; } }
+.servicos{ background: var(--bg); padding-bottom: 5vh; }
+
+.servicos__carousel{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+  margin-top: 8px;
+  --card-w: clamp(240px, 25vw, 360px);
+  --card-h: clamp(300px, 32vw, 430px);
+}
+.servicos__track{
+  display:flex;
+  align-items:center;
+  gap: 28px;
+  width: max-content;
+  will-change: transform;
+}
 
 .service-card{
   position:relative;
-  background: var(--surface);
-  padding: 28px 26px;
-  transition: background .4s var(--ease-out);
+  flex:none;
+  width: var(--card-w);
+  height: var(--card-h);
+  display:flex;
+  overflow:hidden;
+  border-radius: 28px !important;
+  padding: 26px 24px;
+  background-color: #f1a40f;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform-origin:center center;
+  will-change: transform, opacity;
+  box-shadow: 0 20px 44px -18px rgba(5,4,5,.55);
 }
-.service-card:hover{ background: var(--surface-2); }
-.service-card__icon{
-  width:48px; height:48px; border-radius:13px;
-  display:flex; align-items:center; justify-content:center;
-  background: rgba(241,164,15,.10);
-  color: var(--accent-text);
-  font-size: 23px;
-  margin-bottom: 18px;
-  transition: transform .4s var(--ease-out), background .4s;
+
+.service-card__content{
+  position:relative; z-index:2;
+  margin-left:auto;
+  max-width: 78%;
+  text-align:right;
 }
-.service-card:hover .service-card__icon{ transform: translateY(-4px) rotate(-4deg); background: rgba(241,164,15,.18); }
-.service-card__index{
-  position:absolute; top:24px; right:26px;
-  font-family: var(--font-display); font-size:13px; color: var(--ink-faint);
+.service-card__content h3{
+  font-family: var(--font-display); text-transform:uppercase;
+  font-size: clamp(20px, 2.2vw, 27px); letter-spacing:.005em;
+  color: #050405; margin:0 0 10px; line-height:1.16;
 }
-.service-card h3{ font-family: var(--font-display); text-transform:uppercase; font-size:20px; margin:0 0 8px; letter-spacing:.01em; }
-.service-card p{ color: var(--ink-muted); font-size:13.5px; margin:0; max-width: 320px; line-height:1.45; }
+.service-card__content p{
+  color: rgba(5,4,5,.72); font-size: 15px; line-height:1.42; margin:0;
+}
+
+@media (max-width: 900px){
+  .servicos__carousel{ --card-w: clamp(190px, 46vw, 260px); --card-h: clamp(240px, 58vw, 320px); }
+  .servicos__track{ gap: 18px; }
+}
+@media (max-width: 600px){
+  .servicos__carousel{ --card-w: clamp(148px, 58vw, 210px); --card-h: clamp(198px, 74vw, 260px); }
+  .servicos__track{ gap: 12px; }
+  .service-card{ padding: 18px 16px; border-radius: 20px !important; }
+  .service-card__content h3{ font-size: clamp(15px, 4vw, 18px); }
+  .service-card__content p{ font-size: 12px; }
+}
 
 /* =========================================================
    PROCESSO — horizontal pinned scroll (centered, <=100vh)

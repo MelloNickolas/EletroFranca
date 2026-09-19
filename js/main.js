@@ -191,10 +191,10 @@
       });
     });
 
-    // stagger service cards a bit
-    gsap.from(".service-card", {
-      y: 50, opacity: 0, duration: 0.7, stagger: 0.08,
-      scrollTrigger: { trigger: ".servicos__grid", start: "top 85%", toggleActions: "play none none reverse" },
+    // Serviços carousel: fade the whole strip in as it enters
+    gsap.from(".servicos__carousel", {
+      y: 40, opacity: 0, duration: 0.8, ease: "power3.out",
+      scrollTrigger: { trigger: ".servicos__carousel", start: "top 88%", toggleActions: "play none none reverse" },
     });
 
     /* --- Sobre artwork: scrubbed entrance (slide up + fade only) + parallax ---
@@ -522,6 +522,90 @@
   }
 
   /* =========================================================
+     SERVIÇOS — carrossel autoplay com efeito de lente
+     (card central maior, laterais menores; anda para o lado
+     em loop e volta ao chegar no fim — "yoyo")
+  ========================================================= */
+  // Começa pela Manutenção (não pela Instalações) para não deixar
+  // o track com espaço vazio ("buraco") do lado esquerdo no repouso.
+  const SERVICES = [
+    { img: "Manutencao_Card.png", title: "Manutenção Preventiva", desc: "Inspeção completa do sistema elétrico para evitar riscos, curtos e falhas antes que aconteçam." },
+    { img: "Emergencias_Card.png", title: "Emergências 24h", desc: "Curto-circuito, quedas de energia ou disjuntor desarmando? Atendimento rápido quando você mais precisa." },
+    { img: "Quadros_Card.png", title: "Quadros &amp; Disjuntores", desc: "Troca, dimensionamento e organização de quadros de distribuição dentro das normas técnicas." },
+    { img: "Automacao_Card.png", title: "Automação Residencial", desc: "Iluminação inteligente, tomadas e interruptores conectados para uma casa mais prática." },
+    { img: "Laudos_Card.png", title: "Laudos &amp; Vistorias", desc: "Avaliação técnica da instalação elétrica para compra, venda ou locação de imóveis." },
+    { img: "Instalacoes_Card.png", title: "Instalações Elétricas", desc: "Projetos e execução de instalações novas com segurança, capacidade e acabamento impecável." },
+  ];
+
+  function initServicosCarousel() {
+    const carousel = document.getElementById("servicosCarousel");
+    const track = document.getElementById("servicosTrack");
+    if (!carousel || !track) return;
+
+    // Duplica o conjunto de cards (2x) para o loop rodar por mais tempo
+    // antes de precisar inverter (yoyo).
+    const deck = SERVICES.concat(SERVICES);
+    track.innerHTML = deck.map((s) => `
+      <article class="service-card" style="background-image:url('Imgs/Servicos/${s.img}')">
+        <div class="service-card__content">
+          <h3>${s.title}</h3>
+          <p>${s.desc}</p>
+        </div>
+      </article>`).join("");
+
+    const cards = Array.from(track.querySelectorAll(".service-card"));
+    let autoplayTween;
+
+    function maxX() {
+      return Math.max(track.scrollWidth - carousel.clientWidth, 0);
+    }
+
+    // Lens effect (convergente): card closest to the carousel's center
+    // gets bigger, cards further toward the edges get progressively smaller.
+    function updateLens() {
+      const carouselRect = carousel.getBoundingClientRect();
+      const centerX = carouselRect.left + carouselRect.width / 2;
+      const halfWidth = carouselRect.width / 2 || 1;
+      cards.forEach((card) => {
+        const r = card.getBoundingClientRect();
+        const cardCenter = r.left + r.width / 2;
+        const norm = Math.min(Math.abs(cardCenter - centerX) / halfWidth, 1);
+        const scale = 1.1 - norm * 0.28;
+        const opacity = 1 - norm * 0.35;
+        card.style.transform = `scale(${scale})`;
+        card.style.opacity = opacity;
+        card.style.zIndex = Math.round((1 - norm) * 100);
+      });
+    }
+
+    if (prefersReducedMotion || !window.gsap) {
+      updateLens();
+      return;
+    }
+
+    function startAutoplay() {
+      if (autoplayTween) autoplayTween.kill();
+      const distance = maxX();
+      if (distance <= 0) return;
+      autoplayTween = gsap.to(track, {
+        x: -distance,
+        duration: Math.max(distance / 45, 4),
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+    }
+
+    startAutoplay();
+    gsap.ticker.add(updateLens);
+
+    carousel.addEventListener("mouseenter", () => autoplayTween && autoplayTween.pause());
+    carousel.addEventListener("mouseleave", () => autoplayTween && autoplayTween.resume());
+
+    window.addEventListener("resize", startAutoplay);
+  }
+
+  /* =========================================================
      SECTION TIMELINE — fixed right-side dots that track scroll
   ========================================================= */
   function initSectionNav() {
@@ -589,5 +673,6 @@
   initHeroScene();
   initCtaScene();
   initSectionNav();
+  initServicosCarousel();
 
 })();

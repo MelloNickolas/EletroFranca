@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <link rel="icon" href="Imgs/Logo-Mini_NB.png" type="image/png">
-<link rel="stylesheet" href="css/style.css?v=24">
+<link rel="stylesheet" href="css/style.css?v=27">
 </head>
 <body>
 
@@ -151,6 +151,19 @@
     </div>
   </section>
 
+  <!-- ===== SERVIÇOS ===== -->
+  <section class="servicos" id="servicos">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <h2 class="section-title">Serviços que mantêm<br>sua casa <span class="text-accent">segura e funcionando</span></h2>
+      </div>
+    </div>
+
+    <div class="servicos__carousel" id="servicosCarousel">
+      <div class="servicos__track" id="servicosTrack"><!-- gerado via js/main.js (SERVICES) --></div>
+    </div>
+  </section>
+
   <!-- ===== STATS ===== -->
   <section class="stats" id="stats">
     <div class="container stats__grid">
@@ -169,74 +182,6 @@
       <div class="stats__item">
         <span class="stats__number" data-count="7">0</span><span class="stats__suffix">+</span>
         <p>anos de experiência</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== SERVIÇOS ===== -->
-  <section class="servicos" id="servicos">
-    <div class="container">
-      <div class="section-head">
-        <p class="section-kicker">// O que fazemos</p>
-        <h2 class="section-title">Serviços que mantêm<br>sua casa <span class="text-accent">segura e funcionando</span></h2>
-      </div>
-
-      <div class="servicos__grid">
-
-        <article class="service-card">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H12L11 22L20 10H12L13 2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="service-card__index">01</span>
-          <h3>Instalações Elétricas</h3>
-          <p>Projetos e execução de instalações novas com segurança, capacidade e acabamento impecável.</p>
-        </article>
-
-        <article class="service-card">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.1-3.1a4 4 0 01-5.1 5.1L7 20l-3-3 8.7-8.7a4 4 0 015.1-5.1l-3.1 3.1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="service-card__index">02</span>
-          <h3>Manutenção Preventiva</h3>
-          <p>Inspeção completa do sistema elétrico para evitar riscos, curtos e falhas antes que aconteçam.</p>
-        </article>
-
-        <article class="service-card">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="service-card__index">03</span>
-          <h3>Emergências 24h</h3>
-          <p>Curto-circuito, quedas de energia ou disjuntor desarmando? Atendimento rápido quando você mais precisa.</p>
-        </article>
-
-        <article class="service-card">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M9 8h6M9 12h6M9 16h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-          </div>
-          <span class="service-card__index">04</span>
-          <h3>Quadros &amp; Disjuntores</h3>
-          <p>Troca, dimensionamento e organização de quadros de distribuição dentro das normas técnicas.</p>
-        </article>
-
-        <article class="service-card">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M4 17L10 11L14 15L20 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 9H20V15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="service-card__index">05</span>
-          <h3>Automação Residencial</h3>
-          <p>Iluminação inteligente, tomadas e interruptores conectados para uma casa mais prática.</p>
-        </article>
-
-        <article class="service-card">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M12 21C12 21 4 15.5 4 9.8C4 6.6 6.5 4 9.6 4C11.1 4 12.5 4.8 13 6C13.5 4.8 14.9 4 16.4 4C19.5 4 22 6.6 22 9.8C22 15.5 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="service-card__index">06</span>
-          <h3>Laudos &amp; Vistorias</h3>
-          <p>Avaliação técnica da instalação elétrica para compra, venda ou locação de imóveis.</p>
-        </article>
-
       </div>
     </div>
   </section>
@@ -397,6 +342,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="js/main.js?v=24"></script>
+<script src="js/main.js?v=27"></script>
 </body>
 </html>
