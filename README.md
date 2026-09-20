@@ -205,7 +205,7 @@ Os PNGs originais dos cards pesavam ~3 MB cada; em WebP ficaram com 23–38 KB (
 
 ## 🔎 SEO
 
-- **SEO local:** `title` e `description` com **Bauru** e **Lençóis Paulista**, `areaServed` no JSON-LD e as cidades escritas no rodapé
+- **SEO local:** `description` com **Bauru** e **Lençóis Paulista**, `areaServed` no JSON-LD e as cidades escritas no rodapé
 - `title` e `description` únicos, `canonical`, `robots` e `lang="pt-BR"`
 - **Open Graph** e **Twitter Card** com imagem 1200×630 (`Imgs/og-image.jpg`) para o link ficar com preview no WhatsApp, Instagram e redes
 - Dados estruturados **JSON-LD** (`schema.org/Electrician`) com nome, telefone e Instagram
