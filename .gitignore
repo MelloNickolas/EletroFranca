@@ -1,0 +1,32 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*~
+
+# Dependências / builds (o site não usa, mas evita commit acidental)
+node_modules/
+dist/
+.cache/
+
+# Variáveis de ambiente e logs
+.env
+.env.*
+*.log
+
+# Configurações locais do Claude Code (o launch.json é compartilhado e fica no repositório)
+.claude/settings.local.json
+.claude/worktrees/
+
+# Imagens originais/pesadas (versão otimizada em .webp fica no repositório)
+*.psd
+*.ai
+originais/
+
+# Vídeo original de gravação (30 MB) — no repositório fica só o docs/demo.mp4 comprimido
+docs/screenshots/Video-Projeto.mp4
