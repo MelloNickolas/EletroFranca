@@ -1,5 +1,5 @@
 /* =========================================================
-   ELETRO FRANÇA — main.js
+   ELETROFRANÇA — main.js
    GSAP ScrollTrigger + Three.js + interações gerais
 ========================================================= */
 (function () {
@@ -7,17 +7,8 @@
 
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* =======================================================
-     WORK_ITEMS — feed de trabalhos (estilo Instagram)
-     Coloque a foto em /trabalhos/<arquivo> e adicione uma
-     linha aqui. Enquanto não houver fotos reais, o grid
-     mostra cards "Em breve" para manter o layout completo.
-  ======================================================= */
-  const WORK_ITEMS = [
-    // { file: "servico-01.jpg", title: "Troca de quadro", tag: "Instalação" },
-    // { file: "servico-02.jpg", title: "Automação de sala", tag: "Automação" },
-  ];
-  const FEED_SLOTS = 8; // total de espaços exibidos no grid
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   /* ============ PRELOADER ============
      The hero's entrance animation is held back (see playHeroIntro below)
@@ -48,10 +39,6 @@
     revealHero();
   }, 3500);
 
-  /* ============ YEAR ============ */
-  const yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-
   /* ============ CUSTOM CURSOR ============ */
   const cursorDot = document.getElementById("cursorDot");
   const cursorRing = document.getElementById("cursorRing");
@@ -67,7 +54,7 @@
       cursorRing.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
       requestAnimationFrame(loop);
     })();
-    document.querySelectorAll("a, button, .feed-card").forEach((el) => {
+    document.querySelectorAll("a, button").forEach((el) => {
       el.addEventListener("mouseenter", () => cursorRing.classList.add("is-active"));
       el.addEventListener("mouseleave", () => cursorRing.classList.remove("is-active"));
     });
@@ -96,55 +83,55 @@
     burger.setAttribute("aria-expanded", String(open));
   });
   mobileMenu && mobileMenu.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeMenu));
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && mobileMenu && mobileMenu.classList.contains("is-open")) { closeMenu(); burger.focus(); }
+  });
 
-  /* ============ BUILD FEED GRID ============ */
-  const feedGrid = document.getElementById("feedGrid");
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightboxImg");
-  const lightboxCaption = document.getElementById("lightboxCaption");
-  const lightboxClose = document.getElementById("lightboxClose");
+  /* =========================================================
+     SERVIÇOS — carrossel simples, autoplay contínuo (marquee)
+     A rolagem em si é só CSS (@keyframes servicosScroll); aqui só
+     montamos os cards e duplicamos a lista uma vez, para o loop
+     fechar exatamente em -50% sem precisar medir nada em JS.
+  ========================================================= */
+  const SERVICES = [
+    { img: "Manutencao_Card.webp", title: "Manutenção Preventiva", desc: "Inspeção completa do sistema elétrico para evitar riscos, curtos e falhas antes que aconteçam." },
+    { img: "Emergencias_Card.webp", title: "Emergências 24h", desc: "Curto-circuito, quedas de energia ou disjuntor desarmando? Atendimento rápido quando você mais precisa." },
+    { img: "Quadros_Card.webp", title: "Quadros &amp; Disjuntores", desc: "Troca, dimensionamento e organização de quadros de distribuição dentro das normas técnicas." },
+    { img: "Automacao_Card.webp", title: "Automação Residencial", desc: "Iluminação inteligente, tomadas e interruptores conectados para uma casa mais prática." },
+    { img: "Laudos_Card.webp", title: "Laudos &amp; Vistorias", desc: "Avaliação técnica da instalação elétrica para compra, venda ou locação de imóveis." },
+    { img: "Instalacoes_Card.webp", title: "Instalações Elétricas", desc: "Projetos e execução de instalações novas com segurança, capacidade e acabamento impecável." },
+  ];
 
-  function openLightbox(src, caption) {
-    lightboxImg.src = src;
-    lightboxImg.alt = caption || "";
-    lightboxCaption.textContent = caption || "";
-    lightbox.classList.add("is-open");
-    document.body.style.overflow = "hidden";
-  }
-  function closeLightbox() {
-    lightbox.classList.remove("is-open");
-    document.body.style.overflow = "";
-  }
-  lightboxClose && lightboxClose.addEventListener("click", closeLightbox);
-  lightbox && lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
-  window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });
+  function initServicosCarousel() {
+    const track = document.getElementById("servicosTrack");
+    if (!track) return;
 
-  if (feedGrid) {
-    const total = Math.max(FEED_SLOTS, WORK_ITEMS.length);
-    for (let i = 0; i < total; i++) {
-      const item = WORK_ITEMS[i];
-      const card = document.createElement(item ? "button" : "div");
-      card.className = "feed-card" + (item ? "" : " feed-card--placeholder");
+    const deck = SERVICES.concat(SERVICES);
+    // o 2º conjunto existe só para o loop visual: escondido de leitores de tela
+    track.innerHTML = deck.map((s, i) => `
+      <article class="service-card"${i >= SERVICES.length ? ' aria-hidden="true"' : ""}>
+        <img src="Imgs/Servicos/${s.img}" alt="" class="service-card__bg" loading="lazy">
+        <div class="service-card__content">
+          <h3>${s.title}</h3>
+          <p>${s.desc}</p>
+        </div>
+      </article>`).join("");
 
-      if (item) {
-        card.innerHTML = `
-          <img src="trabalhos/${item.file}" alt="${item.title}" loading="lazy">
-          <div class="feed-card__overlay">
-            <strong>${item.title}</strong>
-            <span>${item.tag || ""}</span>
-          </div>
-          <div class="feed-card__stats">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M12 21C12 21 4 15.5 4 9.8C4 6.6 6.5 4 9.6 4C11.1 4 12.5 4.8 13 6C13.5 4.8 14.9 4 16.4 4C19.5 4 22 6.6 22 9.8C22 15.5 12 21 12 21Z" stroke="currentColor" stroke-width="1.8"/></svg>
-          </div>`;
-        card.addEventListener("click", () => openLightbox(`trabalhos/${item.file}`, item.title));
-      } else {
-        card.innerHTML = `
-          <svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H12L11 22L20 10H12L13 2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
-          <span>Em breve</span>`;
-      }
-      feedGrid.appendChild(card);
+    const carousel = track.parentElement;
+    const pauseBtn = document.getElementById("servicosPause");
+    if (pauseBtn) {
+      const label = pauseBtn.querySelector("span");
+      pauseBtn.addEventListener("click", () => {
+        const paused = carousel.classList.toggle("is-paused");
+        pauseBtn.setAttribute("aria-pressed", String(paused));
+        label.textContent = paused ? "Retomar animação" : "Pausar animação";
+      });
     }
   }
+
+  // Gera os cards do carrossel de Serviços antes do bloco GSAP abaixo,
+  // que já registra uma animação de entrada sobre esses cards.
+  initServicosCarousel();
 
   /* ============ GSAP SETUP ============ */
   if (window.gsap && window.ScrollTrigger) {
@@ -170,12 +157,10 @@
     };
 
     /* --- Generic reveal-on-scroll for section heads / cards ---
-       Note: .service-card and .sobre__cards are intentionally excluded here —
-       they get their own dedicated stagger animations below. Having both fight
-       over the same y/opacity transform on the same elements was causing the
-       visible jitter/"bug" seen on the service cards during scroll. */
+       Note: .sobre__cards is intentionally excluded here — it gets its own
+       dedicated stagger animation below. */
     const revealTargets = gsap.utils.toArray(
-      ".section-head, .sobre__title, .depoimento-card, .stats__item, .footer__col, .footer__brand"
+      ".section-head, .sobre__title, .cta__card, .testi-card"
     );
     revealTargets.forEach((el) => {
       gsap.from(el, {
@@ -191,10 +176,33 @@
       });
     });
 
-    // Serviços carousel: fade the whole strip in as it enters
+    // Serviços: o carrossel inteiro entra com fade + slide ao aparecer na tela
+    // (um único elemento, igual ao .section-head acima — staggerar os cards
+    // individualmente deixava o transform "preso" em scrolls rápidos).
     gsap.from(".servicos__carousel", {
-      y: 40, opacity: 0, duration: 0.8, ease: "power3.out",
-      scrollTrigger: { trigger: ".servicos__carousel", start: "top 88%", toggleActions: "play none none reverse" },
+      y: 40,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".servicos__carousel",
+        start: "top 88%",
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    // Métricas: cabeçalho e cada número entram em sequência ao aparecerem na tela.
+    gsap.from(".metrics__head, .metric", {
+      y: 36,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.12,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".metrics",
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
     });
 
     /* --- Sobre artwork: scrubbed entrance (slide up + fade only) + parallax ---
@@ -228,93 +236,7 @@
       scrollTrigger: { trigger: ".sobre__cards", start: "top 88%", toggleActions: "play none none reverse" },
     });
 
-    /* --- Stats count-up --- */
-    document.querySelectorAll(".stats__number").forEach((el) => {
-      const target = parseInt(el.getAttribute("data-count"), 10) || 0;
-      const counter = { val: 0 };
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top 90%",
-        once: true,
-        onEnter: () => {
-          gsap.to(counter, {
-            val: target,
-            duration: 1.6,
-            ease: "power2.out",
-            onUpdate: () => { el.textContent = Math.round(counter.val); },
-          });
-        },
-      });
-    });
-
-    /* --- PROCESSO: horizontal pinned scroll (scroll travado) --- */
-    const processoTrack = document.getElementById("processoTrack");
-    if (processoTrack) {
-      const firstStep = processoTrack.querySelector(".processo__step");
-
-      // Pad both ends of the track so every card (including the first/last)
-      // passes through the exact center of the screen while scrolling.
-      function setTrackCenterPadding() {
-        const cardWidth = firstStep ? firstStep.getBoundingClientRect().width : 0;
-        const pad = Math.max((window.innerWidth - cardWidth) / 2, 24);
-        processoTrack.style.paddingLeft = pad + "px";
-        processoTrack.style.paddingRight = pad + "px";
-      }
-      setTrackCenterPadding();
-
-      const getScrollAmount = () => processoTrack.scrollWidth - window.innerWidth;
-
-      let horizontalTween = gsap.to(processoTrack, {
-        x: () => -getScrollAmount(),
-        ease: "none",
-      });
-
-      ScrollTrigger.create({
-        trigger: ".processo",
-        start: "top top",
-        end: () => `+=${getScrollAmount() + window.innerHeight * 0.4}`,
-        pin: true,
-        animation: horizontalTween,
-        scrub: 1,
-        invalidateOnRefresh: true,
-      });
-
-      window.addEventListener("resize", () => {
-        setTrackCenterPadding();
-        ScrollTrigger.refresh();
-      });
-
-      // step fade-in as they cross center
-      gsap.utils.toArray(".processo__step").forEach((step) => {
-        gsap.from(step, {
-          opacity: 0.25,
-          scale: 0.94,
-          scrollTrigger: {
-            trigger: step,
-            containerAnimation: horizontalTween,
-            start: "left 85%",
-            end: "left 40%",
-            scrub: true,
-          },
-        });
-      });
-    }
-
-    /* --- Feed cards stagger reveal --- */
-    gsap.from(".feed-card", {
-      y: 30, opacity: 0, duration: 0.6, stagger: 0.06,
-      scrollTrigger: { trigger: ".feed__grid", start: "top 88%" },
-    });
-
-    /* --- CTA final reveal --- */
-    gsap.from(".cta-final__title, .cta-final__desc, .cta-final .btn", {
-      y: 30, opacity: 0, duration: 0.8, stagger: 0.1,
-      scrollTrigger: { trigger: ".cta-final", start: "top 75%" },
-    });
-
-    /* --- Recalculate pin/scroll widths once fonts & assets finish loading ---
-       Barlow Condensed loading late shifts text width, which throws off the
-       horizontal-scroll math in .processo if measured too early. */
+    /* --- Recalculate trigger positions once fonts & assets finish loading --- */
     const refreshST = () => ScrollTrigger.refresh();
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(refreshST);
     window.addEventListener("load", refreshST);
@@ -323,6 +245,231 @@
   } else {
     // fallback: just make sure content is visible if gsap fails to load
     document.querySelectorAll(".hero__title-line").forEach((el) => el.style.transform = "none");
+  }
+
+  /* =========================================================
+     MÉTRICAS — conta de 0 até o valor (data-count) na 1ª vez que a
+     faixa aparece: ~1,2s, requestAnimationFrame, ease-out. Mantém
+     casas decimais (data-decimals) e separador de milhar (pt-BR).
+     Com prefers-reduced-motion, mostra o valor final sem animar.
+  ========================================================= */
+  function initMetrics() {
+    const section = document.querySelector(".metrics");
+    if (!section || prefersReducedMotion || !("IntersectionObserver" in window)) return;
+
+    const figures = Array.from(section.querySelectorAll("[data-count]"));
+    const DURATION = 1200;
+    const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+
+    const format = (value, decimals) =>
+      value.toLocaleString("pt-BR", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+
+    figures.forEach((el) => {
+      el.textContent = format(0, parseInt(el.dataset.decimals, 10) || 0);
+    });
+
+    function run() {
+      const start = performance.now();
+      function frame(now) {
+        const t = Math.min((now - start) / DURATION, 1);
+        const eased = easeOut(t);
+        figures.forEach((el) => {
+          const target = parseFloat(el.dataset.count);
+          const decimals = parseInt(el.dataset.decimals, 10) || 0;
+          el.textContent = format(target * eased, decimals);
+        });
+        if (t < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        io.disconnect();
+        run();
+      }
+    }, { threshold: 0.35 });
+    io.observe(section);
+  }
+
+  /* =========================================================
+     PROCESSO — timeline vertical: a linha amarela preenche conforme
+     o scroll e cada ponto/card "acende" quando a linha o alcança.
+     Usa o evento scroll direto (sem GSAP), com um ponto de leitura
+     a 60% da altura da tela.
+  ========================================================= */
+  function initTimeline() {
+    const tl = document.getElementById("timeline");
+    const fill = document.getElementById("timelineFill");
+    if (!tl || !fill) return;
+    const line = tl.querySelector(".timeline__line");
+    const items = Array.from(tl.querySelectorAll(".tl-item"));
+    const dots = items.map((it) => it.querySelector(".tl-dot"));
+    let top = 0, height = 0;
+
+    function measure() {
+      const tr = tl.getBoundingClientRect();
+      const first = dots[0].getBoundingClientRect();
+      const last = dots[dots.length - 1].getBoundingClientRect();
+      top = first.top + first.height / 2 - tr.top;
+      height = last.top + last.height / 2 - tr.top - top;
+      line.style.top = top + "px";
+      line.style.height = height + "px";
+    }
+
+    function update() {
+      const tr = tl.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // Ponto de leitura a 60% da tela; nos últimos 40% de scroll da página ele
+      // desce até o rodapé, para o último ponto sempre conseguir acender
+      // (a timeline é o fim da página e não tem como rolar mais).
+      const remaining = document.documentElement.scrollHeight - vh - window.scrollY;
+      const t = Math.min(Math.max(1 - remaining / (vh * 0.4), 0), 1);
+      const mark = vh * 0.6 + t * (vh * 0.4);
+      const filled = Math.min(Math.max(mark - (tr.top + top), 0), height);
+      fill.style.height = filled + "px";
+      items.forEach((it, i) => {
+        const r = dots[i].getBoundingClientRect();
+        it.classList.toggle("is-active", r.top + r.height / 2 <= mark);
+      });
+    }
+
+    measure();
+    if (prefersReducedMotion) {
+      fill.style.height = height + "px";
+      items.forEach((it) => it.classList.add("is-active"));
+      return;
+    }
+    tl.classList.add("is-ready");
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", () => { measure(); update(); });
+    window.addEventListener("load", () => { measure(); update(); });
+  }
+
+  /* =========================================================
+     TRABALHOS — galeria em mosaico + lightbox (setas, Esc, swipe).
+     Para trocar/adicionar fotos: edite WORK_ITEMS (arquivo em
+     /trabalhos, largura/altura em px e a legenda).
+  ========================================================= */
+  const WORK_ITEMS = [
+    { file: "obra-01.webp", w: 960, h: 1280, title: "Ponto de chuveiro" },
+    { file: "obra-02.webp", w: 960, h: 1280, title: "Quadro de disjuntores" },
+    { file: "obra-03.webp", w: 960, h: 1280, title: "Iluminação em LED" },
+    { file: "obra-04.webp", w: 960, h: 1280, title: "Revisão de fiação" },
+    { file: "obra-05.webp", w: 960, h: 1280, title: "Passagem de cabos" },
+    { file: "obra-06.webp", w: 960, h: 1280, title: "Rede externa" },
+    { file: "obra-07.webp", w: 960, h: 1280, title: "Ventilador de teto" },
+    { file: "obra-08.webp", w: 1280, h: 960, title: "Instalação externa" },
+    { file: "obra-09.webp", w: 960, h: 1280, title: "Caixa de medição" },
+    { file: "obra-10.webp", w: 720, h: 1280, title: "Luminária pendente" },
+    { file: "obra-11.webp", w: 720, h: 1280, title: "Perfil de LED" },
+    { file: "obra-12.webp", w: 720, h: 1280, title: "Iluminação decorativa" },
+    { file: "obra-13.webp", w: 720, h: 1280, title: "LED e pendentes" },
+    { file: "obra-14.webp", w: 720, h: 1280, title: "Spots e trilho" },
+  ];
+
+  function initGallery() {
+    const section = document.querySelector(".gallery");
+    const grid = document.getElementById("galleryGrid");
+    if (!section || !grid) return;
+
+    const BOLT = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2L4 14H12L11 22L20 10H12L13 2Z" fill="currentColor"/></svg>';
+    const src = (it) => "trabalhos/" + it.file;
+
+    grid.innerHTML = WORK_ITEMS.map((it, i) => `
+      <button type="button" class="work" data-index="${i}" style="--ar:${it.w} / ${it.h}" aria-label="Ampliar foto: ${it.title}">
+        <img src="${src(it)}" width="${it.w}" height="${it.h}" alt="Trabalho da Eletrofrança: ${it.title}" loading="lazy" decoding="async">
+        <span class="work__tag">${BOLT}<span>${it.title}</span></span>
+        <span class="work__zap" aria-hidden="true">${BOLT}</span>
+      </button>`).join("");
+
+    const works = Array.from(grid.querySelectorAll(".work"));
+
+    // ----- entrada no scroll (IntersectionObserver, sem GSAP) -----
+    if (!prefersReducedMotion && "IntersectionObserver" in window) {
+      section.classList.add("is-ready");
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const el = e.target;
+          const col = works.indexOf(el) % 3;
+          el.style.transitionDelay = col * 90 + "ms";
+          el.classList.add("is-in");
+          setTimeout(() => { el.style.transitionDelay = ""; }, 1100);
+          io.unobserve(el);
+        });
+      }, { threshold: 0.12 });
+      works.forEach((w) => io.observe(w));
+    }
+
+    // ----- lightbox -----
+    const lb = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lightboxImg");
+    const lbCap = document.getElementById("lightboxCaption");
+    const lbCount = document.getElementById("lightboxCount");
+    const btnClose = document.getElementById("lightboxClose");
+    const btnPrev = document.getElementById("lightboxPrev");
+    const btnNext = document.getElementById("lightboxNext");
+    const figure = document.getElementById("lightboxFigure");
+    if (!lb) return;
+    const N = WORK_ITEMS.length;
+    let current = 0;
+    let lastFocus = null;
+
+    function show(i) {
+      current = (i + N) % N;
+      const it = WORK_ITEMS[current];
+      lbImg.src = src(it);
+      lbImg.alt = "Trabalho da Eletrofrança: " + it.title;
+      lbCap.textContent = it.title;
+      lbCount.textContent = (current + 1) + " / " + N;
+    }
+    function open(i) {
+      lastFocus = document.activeElement;
+      show(i);
+      lb.classList.add("is-open");
+      lb.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      btnClose.focus();
+    }
+    function close() {
+      lb.classList.remove("is-open");
+      lb.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    const isOpen = () => lb.classList.contains("is-open");
+
+    works.forEach((w) => w.addEventListener("click", () => open(parseInt(w.dataset.index, 10))));
+    btnClose.addEventListener("click", close);
+    btnPrev.addEventListener("click", () => show(current - 1));
+    btnNext.addEventListener("click", () => show(current + 1));
+    lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
+
+    window.addEventListener("keydown", (e) => {
+      if (!isOpen()) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowLeft") show(current - 1);
+      else if (e.key === "ArrowRight") show(current + 1);
+      else if (e.key === "Tab") {
+        const f = [btnClose, btnPrev, btnNext];
+        const idx = f.indexOf(document.activeElement);
+        e.preventDefault();
+        f[(idx + (e.shiftKey ? f.length - 1 : 1)) % f.length].focus();
+      }
+    });
+
+    // swipe horizontal no celular
+    let startX = null;
+    figure.addEventListener("pointerdown", (e) => { startX = e.clientX; });
+    figure.addEventListener("pointerup", (e) => {
+      if (startX === null) return;
+      const dx = e.clientX - startX;
+      startX = null;
+      if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+    });
+    figure.addEventListener("pointercancel", () => { startX = null; });
   }
 
   /* =========================================================
@@ -463,216 +610,9 @@
     }
   }
 
-  /* =========================================================
-     THREE.JS — CTA FINAL: campo de linhas sutil (textura)
-  ========================================================= */
-  function initCtaScene() {
-    const canvas = document.getElementById("ctaCanvas");
-    if (!canvas || !window.THREE || prefersReducedMotion) return;
-
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
-    const geometry = new THREE.PlaneGeometry(2, 2);
-    const material = new THREE.ShaderMaterial({
-      transparent: true,
-      uniforms: { u_time: { value: 0 } },
-      vertexShader: `void main(){ gl_Position = vec4(position,1.0); }`,
-      fragmentShader: `
-        uniform float u_time;
-        void main(){
-          vec2 uv = gl_FragCoord.xy / 400.0;
-          float line = sin((uv.x + uv.y) * 12.0 + u_time * 0.6);
-          float alpha = smoothstep(0.96, 1.0, line) * 0.12;
-          gl_FragColor = vec4(0.02, 0.02, 0.02, alpha);
-        }
-      `,
-    });
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
-
-    function resize() {
-      renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
-    }
-    window.addEventListener("resize", resize);
-    resize();
-
-    let rafId;
-    const clock = new THREE.Clock();
-    function animate() {
-      rafId = requestAnimationFrame(animate);
-      material.uniforms.u_time.value = clock.getElapsedTime();
-      renderer.render(scene, camera);
-    }
-
-    if (window.IntersectionObserver) {
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) { if (!rafId) animate(); }
-          else { cancelAnimationFrame(rafId); rafId = null; }
-        });
-      }, { threshold: 0.05 });
-      io.observe(canvas);
-    } else {
-      animate();
-    }
-  }
-
-  /* =========================================================
-     SERVIÇOS — carrossel autoplay com efeito de lente
-     (card central maior, laterais menores; anda para o lado
-     em loop e volta ao chegar no fim — "yoyo")
-  ========================================================= */
-  // Começa pela Manutenção (não pela Instalações) para não deixar
-  // o track com espaço vazio ("buraco") do lado esquerdo no repouso.
-  const SERVICES = [
-    { img: "Manutencao_Card.png", title: "Manutenção Preventiva", desc: "Inspeção completa do sistema elétrico para evitar riscos, curtos e falhas antes que aconteçam." },
-    { img: "Emergencias_Card.png", title: "Emergências 24h", desc: "Curto-circuito, quedas de energia ou disjuntor desarmando? Atendimento rápido quando você mais precisa." },
-    { img: "Quadros_Card.png", title: "Quadros &amp; Disjuntores", desc: "Troca, dimensionamento e organização de quadros de distribuição dentro das normas técnicas." },
-    { img: "Automacao_Card.png", title: "Automação Residencial", desc: "Iluminação inteligente, tomadas e interruptores conectados para uma casa mais prática." },
-    { img: "Laudos_Card.png", title: "Laudos &amp; Vistorias", desc: "Avaliação técnica da instalação elétrica para compra, venda ou locação de imóveis." },
-    { img: "Instalacoes_Card.png", title: "Instalações Elétricas", desc: "Projetos e execução de instalações novas com segurança, capacidade e acabamento impecável." },
-  ];
-
-  function initServicosCarousel() {
-    const carousel = document.getElementById("servicosCarousel");
-    const track = document.getElementById("servicosTrack");
-    if (!carousel || !track) return;
-
-    // Duplica o conjunto de cards (2x) para o loop rodar por mais tempo
-    // antes de precisar inverter (yoyo).
-    const deck = SERVICES.concat(SERVICES);
-    track.innerHTML = deck.map((s) => `
-      <article class="service-card" style="background-image:url('Imgs/Servicos/${s.img}')">
-        <div class="service-card__content">
-          <h3>${s.title}</h3>
-          <p>${s.desc}</p>
-        </div>
-      </article>`).join("");
-
-    const cards = Array.from(track.querySelectorAll(".service-card"));
-    let autoplayTween;
-
-    function maxX() {
-      return Math.max(track.scrollWidth - carousel.clientWidth, 0);
-    }
-
-    // Lens effect (convergente): card closest to the carousel's center
-    // gets bigger, cards further toward the edges get progressively smaller.
-    function updateLens() {
-      const carouselRect = carousel.getBoundingClientRect();
-      const centerX = carouselRect.left + carouselRect.width / 2;
-      const halfWidth = carouselRect.width / 2 || 1;
-      cards.forEach((card) => {
-        const r = card.getBoundingClientRect();
-        const cardCenter = r.left + r.width / 2;
-        const norm = Math.min(Math.abs(cardCenter - centerX) / halfWidth, 1);
-        const scale = 1.1 - norm * 0.28;
-        const opacity = 1 - norm * 0.35;
-        card.style.transform = `scale(${scale})`;
-        card.style.opacity = opacity;
-        card.style.zIndex = Math.round((1 - norm) * 100);
-      });
-    }
-
-    if (prefersReducedMotion || !window.gsap) {
-      updateLens();
-      return;
-    }
-
-    function startAutoplay() {
-      if (autoplayTween) autoplayTween.kill();
-      const distance = maxX();
-      if (distance <= 0) return;
-      autoplayTween = gsap.to(track, {
-        x: -distance,
-        duration: Math.max(distance / 45, 4),
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-      });
-    }
-
-    startAutoplay();
-    gsap.ticker.add(updateLens);
-
-    carousel.addEventListener("mouseenter", () => autoplayTween && autoplayTween.pause());
-    carousel.addEventListener("mouseleave", () => autoplayTween && autoplayTween.resume());
-
-    window.addEventListener("resize", startAutoplay);
-  }
-
-  /* =========================================================
-     SECTION TIMELINE — fixed right-side dots that track scroll
-  ========================================================= */
-  function initSectionNav() {
-    const nav = document.getElementById("sectionNav");
-    const track = document.getElementById("sectionNavTrack");
-    const labelEl = document.getElementById("sectionNavLabel");
-    if (!nav || !track || !labelEl) return;
-
-    const SECTIONS = [
-      { id: "hero", label: "Início" },
-      { id: "sobre", label: "Sobre" },
-      { id: "servicos", label: "Serviços" },
-      { id: "processo", label: "Processo" },
-      { id: "trabalhos", label: "Trabalhos" },
-      { id: "depoimentos", label: "Depoimentos" },
-      { id: "contato", label: "Contato" },
-    ].filter((s) => document.getElementById(s.id));
-
-    const SPACING = 30;
-    track.style.height = `${(SECTIONS.length - 1) * SPACING}px`;
-
-    const dots = SECTIONS.map((s, i) => {
-      const dot = document.createElement("button");
-      dot.className = "section-nav__dot";
-      dot.style.top = `${i * SPACING}px`;
-      dot.type = "button";
-      dot.setAttribute("aria-label", s.label);
-      dot.addEventListener("click", () => {
-        document.getElementById(s.id).scrollIntoView({ behavior: "smooth" });
-      });
-      track.appendChild(dot);
-      return dot;
-    });
-
-    function setActive(index) {
-      dots.forEach((d, i) => d.classList.toggle("is-active", i === index));
-      labelEl.textContent = SECTIONS[index].label;
-    }
-
-    const els = SECTIONS.map((s) => document.getElementById(s.id));
-
-    // Whichever section's midline is closest to the viewport's vertical
-    // center wins — plain getBoundingClientRect checks driven straight off
-    // scroll, so it can't be dropped by an unrelated ScrollTrigger.refresh().
-    // Called directly on scroll (no rAF throttle): rAF callbacks are paused
-    // by the browser while the tab/pane isn't actively compositing, which
-    // would otherwise leave the indicator stuck.
-    function updateActive() {
-      const centerY = window.innerHeight / 2;
-      let activeIndex = 0;
-      let bestDist = Infinity;
-      els.forEach((el, i) => {
-        const rect = el.getBoundingClientRect();
-        const dist = Math.abs((rect.top + rect.bottom) / 2 - centerY);
-        if (dist < bestDist) { bestDist = dist; activeIndex = i; }
-      });
-      setActive(activeIndex);
-    }
-
-    window.addEventListener("scroll", updateActive, { passive: true });
-    window.addEventListener("resize", updateActive);
-    updateActive();
-  }
-
   initHeroScene();
-  initCtaScene();
-  initSectionNav();
-  initServicosCarousel();
+  initMetrics();
+  initTimeline();
+  initGallery();
 
 })();
